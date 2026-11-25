@@ -1,0 +1,283 @@
+:root {
+  color-scheme: light dark;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  --line: color-mix(in srgb, currentColor 18%, transparent);
+  --muted: color-mix(in srgb, currentColor 60%, transparent);
+  --bg: Canvas;
+  --over-bg: color-mix(in srgb, #e5484d 28%, Canvas);
+  --over-fg: light-dark(#a1161c, #ff9592);
+  --full-bg: color-mix(in srgb, #f5a524 22%, Canvas);
+  --free-fg: color-mix(in srgb, currentColor 40%, transparent);
+  --current: color-mix(in srgb, #3e63dd 10%, Canvas);
+}
+
+body {
+  margin: 0;
+  padding: 1.5rem 2rem;
+}
+
+h1 {
+  font-size: 1.4rem;
+  margin: 0 0 1rem;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+/* Range controls */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.controls .nav {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.controls label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.8rem;
+  color: var(--muted);
+  gap: 0.15rem;
+}
+
+.controls label > * {
+  color: CanvasText;
+}
+
+.hint {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* Status and errors */
+.status {
+  color: var(--muted);
+}
+
+.banner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+}
+
+.banner.error {
+  background: var(--over-bg);
+  color: var(--over-fg);
+}
+
+.error-text {
+  color: var(--over-fg);
+  font-size: 0.85rem;
+}
+
+.legend {
+  font-size: 0.85rem;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin: 0 0 0.5rem;
+}
+
+.swatch {
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+  color: CanvasText;
+}
+
+.swatch.over {
+  background: var(--over-bg);
+}
+.swatch.full {
+  background: var(--full-bg);
+}
+.swatch.free {
+  color: var(--free-fg);
+  border: 1px dashed var(--line);
+}
+
+/* Grid */
+.grid-wrap {
+  overflow: auto;
+  max-height: calc(100vh - 14rem);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  transition: opacity 120ms;
+}
+
+.grid-wrap.is-busy {
+  opacity: 0.55;
+}
+
+table.grid {
+  border-collapse: separate;
+  border-spacing: 0;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.9rem;
+}
+
+.grid th,
+.grid td {
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 0.35rem 0.6rem;
+  text-align: left;
+  white-space: nowrap;
+  background: var(--bg);
+}
+
+.grid thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  font-weight: 600;
+}
+
+.grid .name-col {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  font-weight: 500;
+  min-width: 12rem;
+}
+
+.grid thead .name-col {
+  z-index: 3;
+}
+
+.grid .name-col .link {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: normal;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--over-fg);
+  text-decoration: underline;
+}
+
+.grid .hours-col {
+  min-width: 7rem;
+}
+
+.grid th.week {
+  text-align: right;
+}
+
+.week-of {
+  font-weight: normal;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.grid th.current,
+.grid td.current {
+  box-shadow: inset 0 0 0 9999px var(--current);
+}
+
+.cell {
+  text-align: right !important;
+  min-width: 6.5rem;
+}
+
+.cell .cap {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.cell.over {
+  background: var(--over-bg);
+  color: var(--over-fg);
+  font-weight: 600;
+}
+
+.cell.over .cap {
+  color: inherit;
+  opacity: 0.75;
+}
+
+.cell .over-by {
+  display: block;
+  font-size: 0.72rem;
+}
+
+.cell.full {
+  background: var(--full-bg);
+}
+
+.cell.free .alloc,
+.cell.none {
+  color: var(--free-fg);
+}
+
+tr.stale td.cell {
+  opacity: 0.5;
+}
+
+/* Weekly hours editor */
+.hours-button {
+  border: 1px solid transparent;
+  background: none;
+  padding: 0.15rem 0.35rem;
+  border-radius: 4px;
+}
+
+.hours-button:hover,
+.hours-button:focus-visible {
+  border-color: var(--line);
+}
+
+.hours-button span {
+  color: var(--muted);
+}
+
+.hours-editor {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+  max-width: 15rem;
+  white-space: normal;
+}
+
+.hours-editor input {
+  width: 4.5rem;
+}
+
+.hours-editor .error-text {
+  flex-basis: 100%;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.footer button {
+  color: CanvasText;
+}
